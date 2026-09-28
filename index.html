@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중2 역사 퀴즈 - 지역 세계의 교류와 발전</title>
+<style>
+:root {
+  --bg: #f7f5f0;
+  --card: #ffffff;
+  --ink: #2b2320;
+  --sub: #6b615c;
+  --line: #e5ded4;
+  --brand: #b23a2c;
+  --brand-soft: #f5e4e0;
+  --ok: #2f7d3a;
+  --ok-soft: #e3f2e5;
+  --no: #b03030;
+  --no-soft: #fbe6e6;
+  --gold: #b98a2f;
+  --gold-soft: #f7ecd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1a1614;
+    --card: #262220;
+    --ink: #f0ebe4;
+    --sub: #b0a89f;
+    --line: #3a3430;
+    --brand: #e07561;
+    --brand-soft: #3a2622;
+    --ok: #8ac48f;
+    --ok-soft: #223a26;
+    --no: #e77878;
+    --no-soft: #3a2224;
+    --gold: #e5c273;
+    --gold-soft: #3a2f1c;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1a1614;
+  --card: #262220;
+  --ink: #f0ebe4;
+  --sub: #b0a89f;
+  --line: #3a3430;
+  --brand: #e07561;
+  --brand-soft: #3a2622;
+  --ok: #8ac48f;
+  --ok-soft: #223a26;
+  --no: #e77878;
+  --no-soft: #3a2224;
+  --gold: #e5c273;
+  --gold-soft: #3a2f1c;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, "Segoe UI", "Malgun Gothic", "AppleSDGothicNeo-Regular", "Noto Sans KR", sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+.wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 20px 16px 60px;
+}
+header {
+  padding: 24px 0 16px;
+  border-bottom: 2px solid var(--line);
+  margin-bottom: 24px;
+}
+h1 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  color: var(--brand);
+  letter-spacing: -0.02em;
+}
+.sub-title {
+  margin: 0;
+  font-size: 13px;
+  color: var(--sub);
+}
+.stat-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  font-size: 13px;
+}
+.chip {
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: var(--brand-soft);
+  color: var(--brand);
+  font-weight: 600;
+}
+.progress-track {
+  width: 100%;
+  height: 6px;
+  background: var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--brand);
+  transition: width 0.3s ease;
+}
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.btn {
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--ink);
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.05s;
+}
+.btn:hover { border-color: var(--brand); }
+.btn:active { transform: scale(0.98); }
+.btn.primary {
+  background: var(--brand);
+  color: white;
+  border-color: var(--brand);
+  font-weight: 600;
+}
+.btn.primary:hover { filter: brightness(1.05); }
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.q-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: var(--sub);
+  flex-wrap: wrap;
+}
+.q-num {
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--brand);
+  color: white;
+  font-weight: 700;
+  font-size: 12px;
+}
+.q-type {
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--gold-soft);
+  color: var(--gold);
+  font-weight: 600;
+}
+.q-topic {
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--line);
+  color: var(--sub);
+}
+.q-body {
+  font-size: 15.5px;
+  line-height: 1.7;
+  margin-bottom: 16px;
+  white-space: pre-wrap;
+}
+.q-body .quote {
+  display: block;
+  background: var(--bg);
+  border-left: 3px solid var(--brand);
+  padding: 10px 14px;
+  margin: 10px 0;
+  font-size: 14px;
+  color: var(--sub);
+  border-radius: 0 6px 6px 0;
+}
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--card);
+  font-size: 14.5px;
+  line-height: 1.55;
+  transition: all 0.15s;
+  text-align: left;
+  font-family: inherit;
+  color: var(--ink);
+  width: 100%;
+}
+.choice:hover:not(.disabled) {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+.choice.disabled { cursor: default; }
+.choice-mark {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--sub);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sub);
+}
+.choice.correct {
+  background: var(--ok-soft);
+  border-color: var(--ok);
+}
+.choice.correct .choice-mark {
+  background: var(--ok);
+  border-color: var(--ok);
+  color: white;
+}
+.choice.wrong {
+  background: var(--no-soft);
+  border-color: var(--no);
+}
+.choice.wrong .choice-mark {
+  background: var(--no);
+  border-color: var(--no);
+  color: white;
+}
+.choice.reveal {
+  background: var(--ok-soft);
+  border-color: var(--ok);
+  border-style: dashed;
+}
+.choice.reveal .choice-mark {
+  background: var(--ok);
+  border-color: var(--ok);
+  color: white;
+}
+.short-input, .long-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--ink);
+  font-size: 15px;
+  font-family: inherit;
+  resize: vertical;
+}
+.long-input { min-height: 100px; }
+.short-input:focus, .long-input:focus { outline: none; border-color: var(--brand); }
+.submit-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.explain {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.explain-head {
+  font-weight: 700;
+  color: var(--brand);
+  margin-bottom: 8px;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+}
+.explain-block { margin-bottom: 10px; }
+.explain-block:last-child { margin-bottom: 0; }
+.explain-label {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 4px;
+  background: var(--brand-soft);
+  color: var(--brand);
+  font-size: 11px;
+  font-weight: 700;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.explain-label.ok { background: var(--ok-soft); color: var(--ok); }
+.explain-label.no { background: var(--no-soft); color: var(--no); }
+.explain-label.model { background: var(--gold-soft); color: var(--gold); }
+.explain-wrong-list {
+  margin: 6px 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+.explain-wrong-list li {
+  padding: 6px 0;
+  border-top: 1px dashed var(--line);
+  font-size: 13.5px;
+  color: var(--sub);
+}
+.explain-wrong-list li:first-child { border-top: none; }
+.explain-wrong-list li strong { color: var(--ink); }
+.summary-card {
+  text-align: center;
+  padding: 40px 24px;
+}
+.summary-score {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--brand);
+  margin: 12px 0;
+}
+.summary-detail {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  color: var(--sub);
+  font-size: 14px;
+}
+.footer-note {
+  text-align: center;
+  color: var(--sub);
+  font-size: 12px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+  margin-top: 24px;
+}
+.filter-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  font-size: 12px;
+}
+.filter-chip {
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: var(--card);
+  cursor: pointer;
+  color: var(--sub);
+  font-family: inherit;
+  font-size: 12px;
+}
+.filter-chip.active {
+  background: var(--brand);
+  color: white;
+  border-color: var(--brand);
+}
+.hidden { display: none !important; }
+.self-grade {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.self-grade button {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--ink);
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.self-grade button.picked {
+  background: var(--brand);
+  color: white;
+  border-color: var(--brand);
+}
+.jump-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--sub);
+}
+.jump-bar input {
+  width: 60px;
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 13px;
+}
+@media (max-width: 480px) {
+  h1 { font-size: 19px; }
+  .wrap { padding: 16px 12px 40px; }
+  .card { padding: 16px; }
+  .q-body { font-size: 15px; }
+  .choice { padding: 10px 12px; font-size: 14px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>중2 역사 퀴즈 · 지역 세계의 교류와 발전</h1>
+  <p class="sub-title">비상교육 중학 역사① 3-3, 4-1, 4-2, 4-3 단원 · 총 70문항</p>
+  <div class="stat-bar">
+    <span class="chip" id="chip-progress">0 / 70</span>
+    <span class="chip" id="chip-score">정답 0</span>
+    <span class="chip" id="chip-wrong">오답 0</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+</header>
+
+<div class="controls">
+  <button class="btn" id="btn-prev">◀ 이전</button>
+  <button class="btn primary" id="btn-next">다음 ▶</button>
+  <button class="btn" id="btn-reset">전체 초기화</button>
+  <button class="btn" id="btn-theme">🌗 테마</button>
+</div>
+
+<div class="filter-row">
+  <button class="filter-chip active" data-filter="all">전체</button>
+  <button class="filter-chip" data-filter="unsolved">미풀이</button>
+  <button class="filter-chip" data-filter="wrong">오답만</button>
+  <button class="filter-chip" data-filter="mcq">5지선다</button>
+  <button class="filter-chip" data-filter="short">단답형</button>
+  <button class="filter-chip" data-filter="long">서술형</button>
+</div>
+
+<div class="jump-bar">
+  <label>문항 이동:</label>
+  <input type="number" id="jump-input" min="1" max="70" placeholder="번호">
+  <button class="btn" id="jump-btn">이동</button>
+</div>
+
+<div id="quiz-area"></div>
+
+<div class="footer-note">
+  ※ 진행 상황은 브라우저에 자동 저장됩니다. 서술형은 자기채점 방식입니다.
+</div>
+</div>
+
+<script src="questions.js" onerror="loadInline()"></script>
+<script src="app.js" onerror="loadInline()"></script>
+<script>
+// file:// 등 외부 스크립트가 안 불릴 때 인라인 데이터로 대체 (배포용 통합본이 있으면 그것을 씀)
+function loadInline(){ /* no-op; 통합본에서 대체됨 */ }
+</script>
+</body>
+</html>
